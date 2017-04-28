@@ -14,13 +14,13 @@ describe("Tocify jQuery Plugin", function () {
 
         it("should show all headers", function() {
 
-            expect($(".header")).toBeVisible();
+            expect($(".tocify-header")).toBeVisible();
 
         });
 
         it("should hide all subheaders", function() {
 
-            expect($(".sub-header")).toBeHidden();
+            expect($(".tocify-subheader")).toBeHidden();
 
         });
 
@@ -35,7 +35,7 @@ describe("Tocify jQuery Plugin", function () {
             //expect($(".header").children(".subHeader")).toBeVisible();
 
         });
-    
+
     });
 
     describe("Hash generation", function(){
@@ -88,9 +88,9 @@ describe("Tocify jQuery Plugin", function () {
                 return text + "(TEST)";
 
             }, context: ".documentation", selectors: "h1, h3, h4" });
-      
+
             expect($("h1.getting-started-test-marker").eq(0).prev("div").eq(0).attr("name")).toBe($("h1.getting-started-test-marker").text() + "(TEST)");
-            
+
             // check the correct arguments were passed to the function too
 
             // text
