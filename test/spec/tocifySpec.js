@@ -60,6 +60,13 @@ describe("Tocify jQuery Plugin", function () {
 
         });
 
+        it("should scroll to anchor even if it is missing data-unique but has id attribute", function(){
+          var link = $('a[href="#show-hide-effects"]');
+          spyOn($.fn, 'animate');
+          link.click();
+          expect($.fn.animate).toHaveBeenCalled();
+        });
+
     });
 
     describe("Hash generation", function(){

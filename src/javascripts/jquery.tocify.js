@@ -958,7 +958,8 @@
             var self = this,
                 duration = self.options.smoothScroll || 0,
                 scrollTo = self.options.scrollTo,
-                currentDiv = $('a[data-unique="' + elem.attr("data-unique") + '"]');
+                unq_id = elem.attr('data-unique') || elem.attr('id'),
+                currentDiv = $('a[data-unique="' + unq_id + '"],#' + unq_id);
 
             if(!currentDiv.length) {
 
@@ -984,7 +985,7 @@
 
                       if(self.options.history) {
 
-                          window.location.hash = elem.attr("data-unique");
+                          window.location.hash = unq_id;
 
                       }
 

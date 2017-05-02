@@ -34,7 +34,7 @@
 <br />
 <p>Supports <span class="headerDoc">dynamic scroll highlighting</span></p>
 <br />
-<p>Supports <span class="headerDoc">dynamic scroll show/hide effects</span></p>
+<p>Supports <span class="headerDoc">dynamic scroll <a href="#show-hide-effects">show/hide effects</a></span></p>
 <br />
 <p>Supports <span class="headerDoc">page extender</span> option to make sure a page is big enough to scroll to all table of content items</p>
 <br />
@@ -76,6 +76,7 @@ Note: If you do not include History.js, then Tocify will not have history suppor
 <h6>Default</h6>
 <p>context: "body"</p>
 <br /><br />
+
 <h3>selectors</h3>
 <p>The element's used to generate the table of contents.  The order is very important since it will determine the table of content's nesting structure</p>
 <br />
@@ -84,6 +85,7 @@ Note: If you do not include History.js, then Tocify will not have history suppor
 <h6>Default</h6>
 <p>selectors: ["h1"]</p>
 <br /><br />
+
 <h3>showEffect</h3>
 <p>Used to display any of the table of contents nested items</p>
 <br />
@@ -92,6 +94,7 @@ Note: If you do not include History.js, then Tocify will not have history suppor
 <h6>Default</h6>
 <p>showEffect: "slideDown"</p>
 <br /><br />
+
 <h3>showEffectSpeed</h3>
 <p>The time duration of the show animation</p>
 <br />
@@ -100,6 +103,7 @@ Note: If you do not include History.js, then Tocify will not have history suppor
 <h6>Default</h6>
 <p>showEffectSpeed: "medium"</p>
 <br /><br />
+
 <h3>hideEffect</h3>
 <p>Used to hide any of the table of contents nested items</p>
 <br />
@@ -108,6 +112,7 @@ Note: If you do not include History.js, then Tocify will not have history suppor
 <h6>Default</h6>
 <p>hideEffect: "slideUp"</p>
 <br /><br />
+
 <h3>hideEffectSpeed</h3>
 <p>The time duration of the hide animation</p>
 <br />
@@ -116,6 +121,7 @@ Note: If you do not include History.js, then Tocify will not have history suppor
 <h6>Default</h6>
 <p>hideEffectSpeed: "medium"</p>
 <br /><br />
+
 <h3>smoothScroll</h3>
 <p>Animates the page scroll when specific table of content items are clicked and the page moves up or down</p>
 <br />
@@ -124,6 +130,7 @@ Note: If you do not include History.js, then Tocify will not have history suppor
 <h6>Default</h6>
 <p>smoothScroll: true</p>
 <br /><br />
+
 <h3>smoothScrollSpeed</h3>
 <p>The time duration of the smoothScroll animation</p>
 <br />
@@ -132,16 +139,18 @@ Note: If you do not include History.js, then Tocify will not have history suppor
 <h6>Default</h6>
 <p>smoothScrollSpeed: "medium"</p>
 <br /><br />
+
 <h3>showAndHideOnScroll</h3>
 <br />
 <p>Determines if table of content nested items should be shown and hidden while a user scrolls the page</p>
 <br />
-<p>Accepts a boolean: true or false</p>
+<p id="show-hide-effects">Accepts a boolean: true or false</a></p>
 <br />
 <h6>Default</h6>
 <br />
 <p>showAndHideOnScroll: true</p>
 <br /><br />
+
 <h3>highlightOnScroll</h3>
 <br />
 <p>Determines if table of content nested items should be highlighted (set to a different background color to show it is the currently active item) while scrolling</p>
