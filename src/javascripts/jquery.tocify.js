@@ -391,15 +391,19 @@
 
             }));
 
-            // Adds an HTML anchor tag before the currently traversed HTML element
-            self.before($("<div/>", {
+            // Adds an HTML anchor tag before the currently traversed HTML element, global attribute id does not exist
+            if (!$('#' + hashValue).length) {
 
-                // Sets a name attribute on the anchor tag to the text of the currently traversed HTML element (also making sure that all whitespace is replaced with an underscore)
-                "name": hashValue,
+              self.before($("<a/>", {
 
-                "data-unique": hashValue
+                  // Sets a global attribute id on the anchor tag to the text of the currently traversed HTML element (also making sure that all whitespace is replaced with an underscore)
+                  "id": hashValue,
 
-            }));
+                  "data-unique": hashValue
+
+              }));
+
+            }
 
             return item;
 
@@ -520,12 +524,6 @@
             // Event delegation that looks for any clicks on list item elements inside of the HTML element calling the plugin
             this.element.on("click.tocify", "li", function(event) {
 
-                if(self.options.history) {
-
-                    window.location.hash = $(this).attr("data-unique");
-
-                }
-
                 // Removes highlighting from all of the list item's
                 self.element.find("." + self.focusClass).removeClass(self.focusClass);
 
@@ -610,7 +608,7 @@
 
                                 if(!$(extendPageClass).length) {
 
-                                    lastElem = $('div[data-unique="' + $(itemClass).last().attr("data-unique") + '"]');
+                                    lastElem = $('a[data-unique="' + $(itemClass).last().attr("data-unique") + '"]');
 
                                     if(!lastElem.length) return;
 
@@ -632,7 +630,7 @@
 
                                         currentElem = self.element.find('li.active');
 
-                                        self._scrollTo($('div[data-unique="' + currentElem.attr("data-unique") + '"]'));
+                                        self._scrollTo($('a[data-unique="' + currentElem.attr("data-unique") + '"]'));
 
                                     }
 
@@ -654,7 +652,7 @@
                                 closestAnchorIdx = null,
 
                                 // Keeps a reference to all anchors
-                                anchors = $(self.options.context).find("div[data-unique]"),
+                                anchors = $(self.options.context).find("a[data-unique]"),
 
                                 anchorText;
 
@@ -707,6 +705,19 @@
 
                 });
             }
+
+            // Trigger scroll on anchor elements to internal locations
+            $(self.options.context).find('a[href*="#"]')
+              .not('[href="#"]')
+              .not('[href="#0"]')
+              .click(function(e) {
+                if (self.options.smoothScroll) {
+                  e.preventDefault();
+                  var dest = $(this.hash);
+                  self._scrollTo(dest);
+                }
+              });
+
 
         },
 
@@ -951,7 +962,8 @@
             var self = this,
                 duration = self.options.smoothScroll || 0,
                 scrollTo = self.options.scrollTo,
-                currentDiv = $('div[data-unique="' + elem.attr("data-unique") + '"]');
+                unq_id = elem.attr('data-unique') || elem.attr('id'),
+                currentDiv = $('a[data-unique="' + unq_id + '"],#' + unq_id);
 
             if(!currentDiv.length) {
 
@@ -971,7 +983,17 @@
                 }, {
 
                     // Sets the smoothScroll animation time duration to the smoothScrollSpeed option
-                    "duration": duration
+                    "duration": duration,
+
+                    "complete": function() {
+
+                      if(self.options.history) {
+
+                          window.location.hash = unq_id;
+
+                      }
+
+                    }
 
                 });
 

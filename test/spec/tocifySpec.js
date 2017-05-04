@@ -8,6 +8,9 @@ describe("Tocify jQuery Plugin", function () {
 
         toc = $("#toc").tocify({ context: ".documentation", selectors: "h1, h3, h4" });
 
+        self.intrHref = $("a[href*='#']").first();
+        self.intrHrefTarget = $(intrHref[0].hash);
+
 	});
 
 	describe("Generating the table of contents", function() {
@@ -24,16 +27,53 @@ describe("Tocify jQuery Plugin", function () {
 
         });
 
+        it("it shouldn't duplicate global attribute ids in DOM", function() {
+
+          $(":header[id]").each(function(i, h) {
+            expect($('#' + h.id).length).toBe(1);
+            expect($('a#' + h.id).length).toBe(0);
+          });
+
+        });
+
     });
 
     describe("Table of Contents Event Handlers", function() {
 
         it("should show all first-level child subheaders when a header class item is clicked", function() {
+            $(".tocify-header").first().click();
 
-            $(".header").first().click();
+            //expect($(".tocify-header").children(".tocify-subheader")).toBeVisible();
 
-            //expect($(".header").children(".subHeader")).toBeVisible();
+        });
 
+        it("should call _scrollTo when anchor tag is clicked", function() {
+          var tocify = toc.data('tocify');
+          spyOn(tocify, '_scrollTo');
+          self.intrHref.click();
+          expect(tocify._scrollTo).toHaveBeenCalledWith(self.intrHrefTarget);
+
+        });
+
+        it("should not call _scrollTo when anchor tag is clicked when smoothScroll is false", function(){
+          toc = $("#toc").tocify({
+            context: ".documentation",
+            selectors: "h1, h3, h4",
+            smoothScroll: false,
+           });
+
+           var tocify = toc.data('tocify');
+           spyOn(tocify, '_scrollTo');
+           self.intrHref.click();
+           expect(tocify._scrollTo).not.toHaveBeenCalledWith(self.intrHrefTarget);
+
+        });
+
+        it("should scroll to anchor even if it is missing data-unique but has id attribute", function(){
+          var link = $('a[href="#show-hide-effects"]');
+          spyOn($.fn, 'animate');
+          link.click();
+          expect($.fn.animate).toHaveBeenCalled();
         });
 
     });
@@ -49,7 +89,7 @@ describe("Tocify jQuery Plugin", function () {
 
             toc = $("#toc").tocify({ hashGenerator: "pretty", context: ".documentation", selectors: "h1, h3, h4" });
 
-            expect($("h1.getting-started-test-marker").eq(0).prev("div").eq(0).attr("name")).toBe("the-same-value3");
+            expect($("h1.getting-started-test-marker").eq(0).prev("a").eq(0).attr("id")).toBe("the-same-value3");
 
         });
 
@@ -61,7 +101,7 @@ describe("Tocify jQuery Plugin", function () {
 
             loadFixtures("tocifyFixture.html");
             toc = $("#toc").tocify({ hashGenerator: "pretty", context: ".documentation", selectors: "h1, h3, h4" });
-            expect($("h1.getting-started-test-marker").eq(0).prev("div").eq(0).attr("name")).toBe("getting-started");
+            expect($("h1.getting-started-test-marker").eq(0).prev("a").eq(0).attr("id")).toBe("getting-started");
 
         });
 
@@ -70,7 +110,7 @@ describe("Tocify jQuery Plugin", function () {
             loadFixtures("tocifyFixture.html");
             $("h1.getting-started-test-marker").text("Getting    started")
             toc = $("#toc").tocify({ hashGenerator: "pretty", context: ".documentation", selectors: "h1, h3, h4" });
-            expect($("h1.getting-started-test-marker").eq(0).prev("div").eq(0).attr("name")).toBe("getting-started");
+            expect($("h1.getting-started-test-marker").eq(0).prev("a").eq(0).attr("id")).toBe("getting-started");
 
         });
 
@@ -85,11 +125,11 @@ describe("Tocify jQuery Plugin", function () {
                 args.push(arguments);
 
                 // return a test value
-                return text + "(TEST)";
+                return text + "-TEST";
 
             }, context: ".documentation", selectors: "h1, h3, h4" });
 
-            expect($("h1.getting-started-test-marker").eq(0).prev("div").eq(0).attr("name")).toBe($("h1.getting-started-test-marker").text() + "(TEST)");
+            expect($("h1.getting-started-test-marker").eq(0).prev("a").eq(0).attr("id")).toBe($("h1.getting-started-test-marker").text() + "-TEST");
 
             // check the correct arguments were passed to the function too
 
