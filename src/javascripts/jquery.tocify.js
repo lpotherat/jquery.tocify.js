@@ -391,15 +391,19 @@
 
             }));
 
-            // Adds an HTML anchor tag before the currently traversed HTML element
-            self.before($("<a/>", {
+            // Adds an HTML anchor tag before the currently traversed HTML element, global attribute id does not exist
+            if (!$('#' + hashValue).length) {
 
-                // Sets a global attribute id on the anchor tag to the text of the currently traversed HTML element (also making sure that all whitespace is replaced with an underscore)
-                "id": hashValue,
+              self.before($("<a/>", {
 
-                "data-unique": hashValue
+                  // Sets a global attribute id on the anchor tag to the text of the currently traversed HTML element (also making sure that all whitespace is replaced with an underscore)
+                  "id": hashValue,
 
-            }));
+                  "data-unique": hashValue
+
+              }));
+
+            }
 
             return item;
 

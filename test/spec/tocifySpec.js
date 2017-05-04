@@ -27,6 +27,15 @@ describe("Tocify jQuery Plugin", function () {
 
         });
 
+        it("it shouldn't duplicate global attribute ids in DOM", function() {
+
+          $(":header[id]").each(function(i, h) {
+            expect($('#' + h.id).length).toBe(1);
+            expect($('a#' + h.id).length).toBe(0);
+          });
+
+        });
+
     });
 
     describe("Table of Contents Event Handlers", function() {
@@ -116,11 +125,11 @@ describe("Tocify jQuery Plugin", function () {
                 args.push(arguments);
 
                 // return a test value
-                return text + "(TEST)";
+                return text + "-TEST";
 
             }, context: ".documentation", selectors: "h1, h3, h4" });
 
-            expect($("h1.getting-started-test-marker").eq(0).prev("a").eq(0).attr("id")).toBe($("h1.getting-started-test-marker").text() + "(TEST)");
+            expect($("h1.getting-started-test-marker").eq(0).prev("a").eq(0).attr("id")).toBe($("h1.getting-started-test-marker").text() + "-TEST");
 
             // check the correct arguments were passed to the function too
 
