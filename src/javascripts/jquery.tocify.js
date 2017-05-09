@@ -707,7 +707,7 @@
             }
 
             // Trigger scroll on anchor elements to internal locations
-            $(self.options.context).find('a[href*="#"]')
+            $(self.options.context).find('a[href^="#"]')
               .not('[href="#"]')
               .not('[href="#0"]')
               .click(function(e) {
