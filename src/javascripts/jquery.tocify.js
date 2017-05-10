@@ -963,7 +963,7 @@
                 duration = self.options.smoothScroll || 0,
                 scrollTo = self.options.scrollTo,
                 unq_id = elem.attr('data-unique') || elem.attr('id'),
-                currentDiv = $('a[data-unique="' + unq_id + '"],#' + unq_id);
+                currentDiv = $(self.options.context).find('a[data-unique="' + unq_id + '"],#' + unq_id);
 
             if(!currentDiv.length) {
 
